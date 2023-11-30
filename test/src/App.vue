@@ -3,11 +3,11 @@
 <template>
   <div class="to-doo__box">
     <h2>На Сегодня <strong>{{day}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
-    <TaskVue :todayItems="nextday"/>
+    <TaskVue :todayItems="today" @deleteItem="deleteItem" />
     <!-- второй компонент -->
     <h2>На Завтра <strong>{{day+1}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
-      <TaskVue :todayItems="today"/>
-      <MyButton class="btn"  :title = "title"/>
+      <TaskVue :todayItems="nextday"/>
+      <MyButton class="btn" @click.native="addEvent" :title = "title"/>
   </div>
 
 </template>
@@ -117,6 +117,22 @@ const  nextday = reactive([
 function change(item)
 {
   item.change = !item.change
+}
+
+let deleteItem = (value) =>
+{
+  const findIdx = today.findIndex(el => el.id === value);
+  console.log(findIdx);
+  today.splice(findIdx, 1)
+}
+function addEvent()
+{
+ nextday.push(  {
+    change :ref(false),
+    checkbox:ref(false),
+    id:new Date(),
+    text:"",
+  })
 }
 </script>
 <style>
