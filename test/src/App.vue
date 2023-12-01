@@ -8,8 +8,8 @@
     <!-- второй компонент -->
     <h2 v-if="nextday.length">На Завтра <strong>{{day+1}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
     <h3 v-else>на завтра дел не запланированно</h3>
-      <TaskVue :todayItems="nextday" @deleteItem="deleteItem" />
-      <MyButton class="btn" @click.native="addEvent" :title = "title"/>
+    <TaskVue :todayItems="nextday" @deleteItem="deleteItem " />
+    <MyButton class="btn" @click.native="addEvent" :title = "title"/>
   </div>
 
 </template>
@@ -26,6 +26,7 @@ const day = date.getUTCDate();
 const mounthNum = date.getMonth();
 const year = date.getFullYear();
 const title = "Добавить задачу";
+
 const mounth =
 [
  'Январь',
@@ -116,17 +117,19 @@ const  nextday = reactive([
     text:"Lorem nostrud eiusmod id duis 6est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   }
 ])
-function change(item)
-{
-  item.change = !item.change
-}
+console.log(today)
+window.localStorage.setItem('today', JSON.stringify(today))
+const storToday = JSON.parse(window.localStorage.getItem('today'))
+// if (null !== storToday) {
+//     console.log(storToday);
+// }
+console.log(storToday)
+function change(item){item.change = !item.change}
 
 let deleteItem = (value , arrey) =>
 {
   const findIdx = arrey.findIndex(el => el.id === value.id);
-  console.log(value, arrey)
   arrey.splice(findIdx, 1)
-
 }
 function addEvent()
 {
@@ -134,7 +137,7 @@ function addEvent()
     change :ref(false),
     checkbox:ref(false),
     id:new Date(),
-    text:"",
+    text:"Новая запись",
   })
 }
 </script>
