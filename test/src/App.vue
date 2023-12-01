@@ -2,11 +2,13 @@
 
 <template>
   <div class="to-doo__box">
-    <h2>На Сегодня <strong>{{day}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
-    <TaskVue :todayItems="today" @deleteItem="deleteItem" />
+    <h2 v-if="today.length" >На Сегодня <strong>{{day}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
+    <h3 v-else>на Сегодня дел не запланированно</h3>
+    <TaskVue :todayItems="today" @deleteItem="deleteItem " />
     <!-- второй компонент -->
-    <h2>На Завтра <strong>{{day+1}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
-      <TaskVue :todayItems="nextday"/>
+    <h2 v-if="nextday.length">На Завтра <strong>{{day+1}}. {{mounth[mounthNum-1]}}. {{year}}</strong></h2>
+    <h3 v-else>на завтра дел не запланированно</h3>
+      <TaskVue :todayItems="nextday" @deleteItem="deleteItem" />
       <MyButton class="btn" @click.native="addEvent" :title = "title"/>
   </div>
 
@@ -42,37 +44,37 @@ const  today = reactive([
   {
     change :ref(false),
     checkbox:ref(false),
-    id:1,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 1est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:2,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"1 Lorem nostrud eiusmod id duis 2est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:3,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"1 Lorem nostrud eiusmod id duis 3est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:4,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"1 Lorem nostrud eiusmod id duis 4est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:5,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"1 Lorem nostrud eiusmod id duis 5est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:6,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"1 Lorem nostrud eiusmod id duis 6est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   }
 ])
@@ -80,37 +82,37 @@ const  nextday = reactive([
   {
     change :ref(false),
     checkbox:ref(false),
-    id:1,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 1est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:2,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 2est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:3,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 3est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:4,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 4est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:5,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 5est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   },
   {
     change :ref(false),
     checkbox:ref(false),
-    id:6,
+    id:Math.floor(Math.random() * +Date.now()),
     text:"Lorem nostrud eiusmod id duis 6est commodo elit velit Lorem aute laborum consequat exercitation aute.",
   }
 ])
@@ -119,15 +121,16 @@ function change(item)
   item.change = !item.change
 }
 
-let deleteItem = (value) =>
+let deleteItem = (value , arrey) =>
 {
-  const findIdx = today.findIndex(el => el.id === value);
-  console.log(findIdx);
-  today.splice(findIdx, 1)
+  const findIdx = arrey.findIndex(el => el.id === value.id);
+  console.log(value, arrey)
+  arrey.splice(findIdx, 1)
+
 }
 function addEvent()
 {
- nextday.push(  {
+ today.push(  {
     change :ref(false),
     checkbox:ref(false),
     id:new Date(),

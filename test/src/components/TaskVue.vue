@@ -4,7 +4,7 @@
         <input v-model="item.checkbox" type="checkbox" >
         <p @click="change(item)" v-if="!item.change" :class= "{ active : item.checkbox}">{{item.text}}</p>
         <input @change="change(item)" class="to-doo__tems-change" v-else type="text" v-model = "item.text">
-        <MyButton title='Удалить' @click="$emit('deleteItem', item.id)" />
+        <MyButton class="btn" title='Удалить' @click="$emit('deleteItem', item ,todayItems )" />
       </div>
     </div>
 </template>
@@ -23,4 +23,10 @@ function change(item)
 </script>
 
 <style lang="css" scoped>
+  .btn
+  {
+    width:100px;
+    height: 30px;
+    border: 1px solid #000000F0;
+  }
 </style>

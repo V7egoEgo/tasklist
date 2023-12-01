@@ -1,4 +1,4 @@
-<template>
+	<template>
 	<button>{{title}}</button>
 </template>
 <script setup>
